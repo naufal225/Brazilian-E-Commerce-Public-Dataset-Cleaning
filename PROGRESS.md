@@ -195,3 +195,9 @@ Name: count, dtype: int64
 - review_score range 1-5 → bersih, tidak ada nilai di luar range
 ### Dimensi 5 — Relasi
 - Semua foreign key valid, 0 orphan records
+
+**order_reviews — duplicate order_id**
+Temuan: 547 order punya lebih dari 1 review
+Pola: beragam — sistem resend, customer update score, bug submission
+Keputusan: Dedup, admbil yang terakhir
+Alasan: Buat jaga jaga barang kali kepake nanti buat analisis sentimen
