@@ -201,3 +201,37 @@ Temuan: 547 order punya lebih dari 1 review
 Pola: beragam — sistem resend, customer update score, bug submission
 Keputusan: Dedup, admbil yang terakhir
 Alasan: Buat jaga jaga barang kali kepake nanti buat analisis sentimen
+
+## Hari 4 — Type Casting, 1 7 2026
+
+orders: 5 kolom timestamp → datetime64, 0 gagal
+order_items: shipping_limit_date → datetime64, 0 gagal  
+order_reviews: 2 kolom timestamp → datetime64, 0 gagal
+
+## Hari 5 - Outlier Detection, 2 7 2026
+
+**order_items - price**
+
+Q1: 39.9 Q3: 134.9 IQR: 95.0
+Batas bawah: -102.6
+Batas atas: 277.4
+Keputusan: flag is_price_outlier, true jika > outlier
+Kesimpulan: produk outlier valid, kebanyakan adalah produk premium seperti PC, Aksesoris komputer dll
+
+**order_items - freight_value**
+
+Q1: 13.08 Q3: 21.15 IQR: 8.0699
+Batas bawah: 0.975
+Batas atas: 33.154
+Keputusan: flag is_freight_value_outlier
+Kesimpulan: valid, mayoritas outlier karena barang mahal atau ongkir jauh
+
+**order_payments - payment_value**
+
+Q1: 56.79
+Q3: 171.837
+IQR: 115.047
+Batas bawah: -115.781
+Batas atas: 344.408
+Keputusan: flag is_payment_value_outlier
+Kesimpulan: payment value 0 valid karena pakai voucher
